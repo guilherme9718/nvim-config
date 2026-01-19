@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -271,18 +271,19 @@ require('lazy').setup({
   -- options to `gitsigns.nvim`.
   --
   -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
+  require('kickstart.plugins.gitsigns'),
+  -- { -- Adds git related signs to the gutter, as well as utilities for managing changes
+  --   'lewis6991/gitsigns.nvim',
+  --   opts = {
+  --     signs = {
+  --       add = { text = '+' },
+  --       change = { text = '~' },
+  --       delete = { text = '_' },
+  --       topdelete = { text = '‾' },
+  --       changedelete = { text = '~' },
+  --     },
+  --   },
+  -- },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -298,7 +299,7 @@ require('lazy').setup({
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
 
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
@@ -379,7 +380,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -487,7 +488,7 @@ require('lazy').setup({
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',    opts = {} },
 
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
@@ -744,36 +745,38 @@ require('lazy').setup({
       {
         '<leader>f',
         function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
+          require('conform').format { async = true, formatters = { 'csharpier' }, lsp_format = 'fallback' }
         end,
         mode = '',
         desc = '[F]ormat buffer',
       },
     },
     opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        else
-          return {
-            timeout_ms = 500,
-            lsp_format = 'fallback',
-          }
-        end
-      end,
+      notify_on_error = true,
+      -- format_on_save = function(bufnr)
+      --   -- Disable "format_on_save lsp_fallback" for languages that don't
+      --   -- have a well standardized coding style. You can add additional
+      --   -- languages here or re-enable it for the disabled ones.
+      --   local disable_filetypes = { c = true, cpp = true }
+      --   if disable_filetypes[vim.bo[bufnr].filetype] then
+      --     return nil
+      --   else
+      --     return {
+      --       timeout_ms = 500,
+      --       lsp_format = 'fallback',
+      --     }
+      --   end
+      -- end,
       formatters_by_ft = {
-        lua = { 'stylua' },
+        -- lua = { 'stylua' },
+        csharp = { 'csharpier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
       },
+      formatters = { 'csharpier' }
     },
   },
 
@@ -806,7 +809,20 @@ require('lazy').setup({
           --   end,
           -- },
         },
-        opts = {},
+        opts = {
+          keymap = {
+            -- set to 'none' to disable the 'default' preset
+            preset = 'default',
+
+            ['<Up>'] = { 'select_prev', 'fallback' },
+            ['<Down>'] = { 'select_next', 'fallback' },
+
+            -- show with a list of providers
+            ['<C-space>'] = { 'show' },
+            ['<tab>'] = { 'accept', 'fallback' },
+            ['<esc>'] = { 'hide', 'fallback' }
+          }
+        },
       },
       'folke/lazydev.nvim',
     },
@@ -899,7 +915,7 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  { 'folke/todo-comments.nvim',  event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' },  opts = { signs = false } },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -978,7 +994,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -990,6 +1006,157 @@ require('lazy').setup({
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
+  {
+    "chenasraf/text-transform.nvim",
+    -- stable version
+    version = "*", -- or: tag = "stable"
+    -- dev version
+
+
+    -- branch = "develop",
+    -- Optional - for Telescope popup
+    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
+  },
+  {
+    "GustavEikaas/easy-dotnet.nvim",
+    -- 'nvim-telescope/telescope.nvim' or 'ibhagwan/fzf-lua' or 'folke/snacks.nvim'
+    -- are highly recommended for a better experience
+    dependencies = { "nvim-lua/plenary.nvim", 'nvim-telescope/telescope.nvim', },
+    config = function()
+      local dotnet = require("easy-dotnet")
+      -- Options are not required
+      dotnet.setup({
+        lsp = {
+          enabled = true,            -- Enable builtin roslyn lsp
+          roslynator_enabled = true, -- Automatically enable roslynator analyzer
+          analyzer_assemblies = {},  -- Any additional roslyn analyzers you might use like SonarAnalyzer.CSharp
+          config = {},
+        },
+        debugger = {
+          -- Path to custom coreclr DAP adapter
+          -- easy-dotnet-server falls back to its own netcoredbg binary if bin_path is nil
+          bin_path = nil,
+          apply_value_converters = true,
+          auto_register_dap = true,
+          mappings = {
+            open_variable_viewer = { lhs = "T", desc = "open variable viewer" },
+          },
+        },
+        ---@type TestRunnerOptions
+        test_runner = {
+          ---@type "split" | "vsplit" | "float" | "buf"
+          viewmode = "float",
+          ---@type number|nil
+          vsplit_width = nil,
+          ---@type string|nil "topleft" | "topright"
+          vsplit_pos = nil,
+          enable_buffer_test_execution = true, --Experimental, run tests directly from buffer
+          noBuild = true,
+          icons = {
+            passed = "",
+            skipped = "",
+            failed = "",
+            success = "",
+            reload = "",
+            test = "",
+            sln = "󰘐",
+            project = "󰘐",
+            dir = "",
+            package = "",
+          },
+          mappings = {
+            run_test_from_buffer = { lhs = "<leader>r", desc = "run test from buffer" },
+            run_all_tests_from_buffer = { lhs = "<leader>t", desc = "run all tests from buffer" },
+            peek_stack_trace_from_buffer = { lhs = "<leader>p", desc = "peek stack trace from buffer" },
+            filter_failed_tests = { lhs = "<leader>fe", desc = "filter failed tests" },
+            debug_test = { lhs = "<leader>d", desc = "debug test" },
+            go_to_file = { lhs = "g", desc = "go to file" },
+            run_all = { lhs = "<leader>R", desc = "run all tests" },
+            run = { lhs = "<leader>r", desc = "run test" },
+            peek_stacktrace = { lhs = "<leader>p", desc = "peek stacktrace of failed test" },
+            expand = { lhs = "o", desc = "expand" },
+            expand_node = { lhs = "E", desc = "expand node" },
+            expand_all = { lhs = "-", desc = "expand all" },
+            collapse_all = { lhs = "W", desc = "collapse all" },
+            close = { lhs = "q", desc = "close testrunner" },
+            refresh_testrunner = { lhs = "<C-r>", desc = "refresh testrunner" }
+          },
+          --- Optional table of extra args e.g "--blame crash"
+          additional_args = {}
+        },
+        new = {
+          project = {
+            prefix = "sln" -- "sln" | "none"
+          }
+        },
+        ---@param action "test" | "restore" | "build" | "run"
+        terminal = function(path, action, args)
+          args = args or ""
+          local commands = {
+            run = function() return string.format("dotnet run --project %s %s", path, args) end,
+            test = function() return string.format("dotnet test %s %s", path, args) end,
+            restore = function() return string.format("dotnet restore %s %s", path, args) end,
+            build = function() return string.format("dotnet build %s %s", path, args) end,
+            watch = function() return string.format("dotnet watch --project %s %s", path, args) end,
+          }
+          local command = commands[action]()
+          if require("easy-dotnet.extensions").isWindows() == true then command = command .. "\r" end
+          vim.cmd("vsplit")
+          vim.cmd("term " .. command)
+        end,
+        csproj_mappings = true,
+        fsproj_mappings = true,
+        auto_bootstrap_namespace = {
+          --block_scoped, file_scoped
+          type = "block_scoped",
+          enabled = true,
+          use_clipboard_json = {
+            behavior = "prompt", --'auto' | 'prompt' | 'never',
+            register = "+",      -- which register to check
+          },
+        },
+        server = {
+          ---@type nil | "Off" | "Critical" | "Error" | "Warning" | "Information" | "Verbose" | "All"
+          log_level = nil,
+        },
+        -- choose which picker to use with the plugin
+        -- possible values are "telescope" | "fzf" | "snacks" | "basic"
+        -- if no picker is specified, the plugin will determine
+        -- the available one automatically with this priority:
+        -- telescope -> fzf -> snacks ->  basic
+        picker = "telescope",
+        background_scanning = true,
+        notifications = {
+          --Set this to false if you have configured lualine to avoid double logging
+          handler = function(start_event)
+            local spinner = require("easy-dotnet.ui-modules.spinner").new()
+            spinner:start_spinner(start_event.job.name)
+            ---@param finished_event JobEvent
+            return function(finished_event)
+              spinner:stop_spinner(finished_event.result.msg, finished_event.result.level)
+            end
+          end,
+        },
+        diagnostics = {
+          default_severity = "error",
+          setqflist = false,
+        },
+      })
+
+      -- Example command
+      vim.api.nvim_create_user_command('Secrets', function()
+        dotnet.secrets()
+      end, {})
+
+      -- Example keybinding
+      vim.keymap.set("n", "<C-p>", function()
+        dotnet.run_project()
+      end)
+    end
+  },
+  { 'akinsho/toggleterm.nvim',   version = "*",      config = true },
+  { 'akinsho/git-conflict.nvim', version = "*",      config = true },
+  { 'akinsho/bufferline.nvim',   version = "*",      dependencies = 'nvim-tree/nvim-web-devicons' }
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -1012,5 +1179,99 @@ require('lazy').setup({
   },
 })
 
+require("text-transform").setup({
+  --- Prints information about internals of the plugin. Very verbose, only useful for debugging.
+  debug = false,
+  --- Keymap configurations
+  keymap = {
+    --- Keymap to open the telescope popup. Set to `false` or `nil` to disable keymapping
+    --- You can always customize your own keymapping manually.
+    telescope_popup = {
+      --- Opens the popup in normal mode
+      ["n"] = "<Leader>;",
+      --- Opens the popup in visual/visual block modes
+      ["v"] = "<Leader>;",
+    },
+  },
+  ---
+  --- Configurations for the text-transform replacers
+  --- Keys indicate the replacer name, and the value is a table with the following options:
+  ---
+  --- - `enabled` (boolean): Enable or disable the replacer - disabled replacers do not show up in the popup.
+  replacers = {
+    camel_case = { enabled = true },
+    const_case = { enabled = true },
+    dot_case = { enabled = true },
+    kebab_case = { enabled = true },
+    pascal_case = { enabled = true },
+    snake_case = { enabled = true },
+    title_case = { enabled = true },
+  },
+
+  --- Sort the replacers in the popup.
+  --- Possible values: 'frequency', 'name'
+  sort_by = "frequency",
+
+  --- The popup type to show.
+  --- Possible values: 'telescope', 'select'
+  popup_type = 'select'
+})
+
+require("toggleterm").setup { open_mapping = [[<c-\>]], direction = 'tab' }
+require("git-conflict").setup({
+  default_commands = true,     -- disable commands created by this plugin
+  disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
+  list_opener = 'copen',       -- command or function to open the conflicts list
+  highlights = {               -- They must have background color, otherwise the default color will be used
+    incoming = 'DiffAdd',
+    current = 'DiffText',
+  },
+  default_mappings = {
+    ours = 'o',
+    theirs = 't',
+    none = '0',
+    both = 'b'
+  },
+})
+
+require("bufferline").setup {}
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- vim.keymap.set('n', '<silent><leader>1', '<Cmd>BufferLineGoToBuffer 1<CR>')
+-- vim.keymap.set('n', '<silent><leader>2', '<Cmd>BufferLineGoToBuffer 2<CR>')
+-- vim.keymap.set('n', '<silent><leader>3', '<Cmd>BufferLineGoToBuffer 3<CR>')
+-- vim.keymap.set('n', '<silent><leader>4', '<Cmd>BufferLineGoToBuffer 4<CR>')
+-- vim.keymap.set('n', '<silent><leader>5', '<Cmd>BufferLineGoToBuffer 5<CR>')
+-- vim.keymap.set('n', '<silent><leader>6', '<Cmd>BufferLineGoToBuffer 6<CR>')
+-- vim.keymap.set('n', '<silent><leader>7', '<Cmd>BufferLineGoToBuffer 7<CR>')
+-- vim.keymap.set('n', '<silent><leader>8', '<Cmd>BufferLineGoToBuffer 8<CR>')
+-- vim.keymap.set('n', '<silent><leader>9', '<Cmd>BufferLineGoToBuffer 9<CR>')
+-- vim.keymap.set('n', '<silent><leader>$', '<Cmd>BufferLineGoToBuffer -1<CR>')
+-- vim.keymap.set('n', '<silent>[b', '<Cmd>BufferLineCycleNext<CR>')
+-- vim.keymap.set('n', '<silent>]b', '<Cmd>BufferLineCyclePrev<CR>')
+
+local function map(mode, l, r, opts)
+  opts = opts or {}
+  opts.buffer = bufnr
+  vim.keymap.set(mode, l, r, opts)
+end
+
+map('n', '<C-q>',  "<cmd>bw<CR>", { desc = "Buffer delete" }) -- shift+Quit to close current tab
+map('n', 'g1', function() require('bufferline').go_to_buffer(1, true) end, { desc = "Go to Buffer 1" })
+map('n', 'g2', function() require('bufferline').go_to_buffer(2, true) end, { desc = "Go to Buffer 2" })
+map('n', 'g3', function() require('bufferline').go_to_buffer(3, true) end, { desc = "Go to Buffer 3" })
+map('n', 'g4', function() require('bufferline').go_to_buffer(4, true) end, { desc = "Go to Buffer 4" })
+map('n', 'g5', function() require('bufferline').go_to_buffer(5, true) end, { desc = "Go to Buffer 5" })
+map('n', 'g6', function() require('bufferline').go_to_buffer(6, true) end, { desc = "Go to Buffer 6" })
+map('n', 'g7', function() require('bufferline').go_to_buffer(7, true) end, { desc = "Go to Buffer 7" })
+map('n', 'g8', function() require('bufferline').go_to_buffer(8, true) end, { desc = "Go to Buffer 8" })
+map('n', 'g9', function() require('bufferline').go_to_buffer(9, true) end, { desc = "Go to Buffer 9" })
+map('n', 'g0', function() require('bufferline').go_to_buffer(-1, true) end, { desc = "Go to Buffer -1" })
+map('n', '<M-j>', '<cmd>BufferLineCyclePrev<CR>', { desc = "Go to next Buffer" }) -- Alt+j to move to left
+map('n', '<M-k>', '<cmd>BufferLineCycleNext<CR>', { desc = "Go to previous Buffer" }) -- Alt+k to move to right
+map('n', '<M-J>', '<cmd>BufferLineMovePrev<CR>', { desc = "Move buffer prev" }) -- Alt+Shift+j grab to with you to left
+map('n', '<M-K>', '<cmd>BufferLineMoveNext<CR>', { desc = "Move buffer next" })
+
+--Lazy git
+vim.keymap.set('n', '<leader>g', '<cmd>2TermExec cmd="lazygit"<CR>', { desc = 'Open Lazy[G]it' })
