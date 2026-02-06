@@ -1156,7 +1156,18 @@ require('lazy').setup({
   },
   { 'akinsho/toggleterm.nvim',   version = "*",      config = true },
   { 'akinsho/git-conflict.nvim', version = "*",      config = true },
-  { 'akinsho/bufferline.nvim',   version = "*",      dependencies = 'nvim-tree/nvim-web-devicons' }
+  { 'akinsho/bufferline.nvim',   version = "*",      dependencies = 'nvim-tree/nvim-web-devicons' },
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("nvim-tree").setup {}
+    end,
+  }
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -1257,7 +1268,7 @@ local function map(mode, l, r, opts)
   vim.keymap.set(mode, l, r, opts)
 end
 
-map('n', '<C-q>',  "<cmd>bw<CR>", { desc = "Buffer delete" }) -- shift+Quit to close current tab
+map('n', '<C-q>', "<cmd>bw<CR>", { desc = "Buffer delete" })  -- shift+Quit to close current tab
 map('n', 'g1', function() require('bufferline').go_to_buffer(1, true) end, { desc = "Go to Buffer 1" })
 map('n', 'g2', function() require('bufferline').go_to_buffer(2, true) end, { desc = "Go to Buffer 2" })
 map('n', 'g3', function() require('bufferline').go_to_buffer(3, true) end, { desc = "Go to Buffer 3" })
@@ -1268,10 +1279,16 @@ map('n', 'g7', function() require('bufferline').go_to_buffer(7, true) end, { des
 map('n', 'g8', function() require('bufferline').go_to_buffer(8, true) end, { desc = "Go to Buffer 8" })
 map('n', 'g9', function() require('bufferline').go_to_buffer(9, true) end, { desc = "Go to Buffer 9" })
 map('n', 'g0', function() require('bufferline').go_to_buffer(-1, true) end, { desc = "Go to Buffer -1" })
-map('n', '<M-j>', '<cmd>BufferLineCyclePrev<CR>', { desc = "Go to next Buffer" }) -- Alt+j to move to left
+map('n', '<M-j>', '<cmd>BufferLineCyclePrev<CR>', { desc = "Go to next Buffer" })     -- Alt+j to move to left
 map('n', '<M-k>', '<cmd>BufferLineCycleNext<CR>', { desc = "Go to previous Buffer" }) -- Alt+k to move to right
-map('n', '<M-J>', '<cmd>BufferLineMovePrev<CR>', { desc = "Move buffer prev" }) -- Alt+Shift+j grab to with you to left
+map('n', '<M-J>', '<cmd>BufferLineMovePrev<CR>', { desc = "Move buffer prev" })       -- Alt+Shift+j grab to with you to left
 map('n', '<M-K>', '<cmd>BufferLineMoveNext<CR>', { desc = "Move buffer next" })
 
 --Lazy git
 vim.keymap.set('n', '<leader>g', '<cmd>2TermExec cmd="lazygit"<CR>', { desc = 'Open Lazy[G]it' })
+
+vim.cmd [[set expandtab]]
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true

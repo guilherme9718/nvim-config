@@ -6,6 +6,11 @@ Aqui anotarei os atalhos mais importantes da minha configuração
 <C> = ctrl
 <leader> = space
 
+## Navegação
+navegar para o buffer/linha anterior = <C-o>
+navegar para o buffer/linhagit push posterior = <C-i>
+
+
 ## Busca
 ver opções de busca = <leader>s
 
@@ -29,3 +34,6 @@ ours = o
 theirs = t
 none = 0
 both = b
+
+# File explorer (nvim-tree)
+Abrir keymaps = g?
