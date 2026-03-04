@@ -1,7 +1,6 @@
-
 --If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
 
-require('user.options')
+require 'user.options'
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -531,9 +530,9 @@ require('lazy').setup({
     end,
   },
 
-  require('kickstart.plugins.conform'), 
+  require 'kickstart.plugins.conform',
 
-  require('kickstart.plugins.blink'),
+  require 'kickstart.plugins.blink',
 
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
@@ -676,7 +675,7 @@ require('lazy').setup({
     -- Optional - for Telescope popup
     dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
   },
-  require('user.plugins.easy-dotnet'),
+  require 'user.plugins.easy-dotnet',
   { 'akinsho/toggleterm.nvim', version = '*', config = true },
   { 'akinsho/git-conflict.nvim', version = '*', config = true },
   { 'akinsho/bufferline.nvim', version = '*', dependencies = 'nvim-tree/nvim-web-devicons' },
@@ -698,6 +697,7 @@ require('lazy').setup({
       require('cd-project').setup {}
     end,
   },
+  require 'user.plugins.fugitive',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -781,4 +781,4 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
-require('user.keymaps')
+require 'user.keymaps'

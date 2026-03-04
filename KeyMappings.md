@@ -10,6 +10,9 @@ Aqui anotarei os atalhos mais importantes da minha configuração
 navegar para o buffer/linha anterior = <C-o>
 navegar para o buffer/linhagit push posterior = <C-i>
 
+## Mapeamentos importantes
+Undo = U
+Redo = <C-R>
 
 ## Busca
 ver opções de busca = <leader>s
