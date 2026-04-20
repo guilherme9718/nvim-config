@@ -32,13 +32,13 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 --Lazy git
-local Terminal  = require('toggleterm.terminal').Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+local Terminal = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new { cmd = 'lazygit', hidden = true }
 
 function _lazygit_toggle()
   lazygit:toggle()
 end
-vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true, desc = 'Open Lazy[G]it' })
+vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>lua _lazygit_toggle()<CR>', { noremap = true, silent = true, desc = 'Open Lazy[G]it' })
 
 local function map(mode, l, r, opts)
   opts = opts or {}
@@ -81,3 +81,15 @@ map('n', '<M-j>', '<cmd>BufferLineCyclePrev<CR>', { desc = 'Go to next Buffer' }
 map('n', '<M-k>', '<cmd>BufferLineCycleNext<CR>', { desc = 'Go to previous Buffer' }) -- Alt+k to move to right
 map('n', '<M-J>', '<cmd>BufferLineMovePrev<CR>', { desc = 'Move buffer prev' }) -- Alt+Shift+j grab to with you to left
 map('n', '<M-K>', '<cmd>BufferLineMoveNext<CR>', { desc = 'Move buffer next' })
+map('n', 'grl', function()
+  vim.diagnostic.open_float()
+end, { desc = 'LSP: Show Hovered Dignostic' })
+
+--Text transform
+vim.keymap.set({ "n", "v" }, "<leader>tc", ":TtCamel<CR>",  { silent = true, desc = "To camelCase" })
+vim.keymap.set({ "n", "v" }, "<leader>ts", ":TtSnake<CR>",  { silent = true, desc = "To snake_case" })
+vim.keymap.set({ "n", "v" }, "<leader>tp", ":TtPascal<CR>", { silent = true, desc = "To PascalCase" })
+vim.keymap.set({ "n", "v" }, "<leader>to", ":TtConst<CR>",  { silent = true, desc = "To CONST_CASE" })
+vim.keymap.set({ "n", "v" }, "<leader>td", ":TtDot<CR>",    { silent = true, desc = "To dot.case" })
+vim.keymap.set({ "n", "v" }, "<leader>tk", ":TtKebab<CR>",  { silent = true, desc = "To kebab-case" })
+vim.keymap.set({ "n", "v" }, "<leader>tt", ":TtTitle<CR>",  { silent = true, desc = "To Title Case" })

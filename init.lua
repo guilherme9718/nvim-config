@@ -529,11 +529,15 @@ require('lazy').setup({
       }
     end,
   },
+  require 'kickstart.plugins.debug',
 
   require 'kickstart.plugins.conform',
 
   require 'kickstart.plugins.blink',
 
+  require 'user.plugins.nvim-macros',
+
+  require 'user.plugins.render-markdown',
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
@@ -666,14 +670,28 @@ require('lazy').setup({
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
   {
-    'chenasraf/text-transform.nvim',
-    -- stable version
-    version = '*', -- or: tag = "stable"
-    -- dev version
-
-    -- branch = "develop",
-    -- Optional - for Telescope popup
-    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
+      "johmsalas/text-case.nvim",
+      dependencies = { "nvim-telescope/telescope.nvim" },
+      config = function()
+        require("textcase").setup({})
+        require("telescope").load_extension("textcase")
+      end,
+      keys = {
+        "ga", -- Default invocation prefix
+        { "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "x" }, desc = "Telescope" },
+      },
+      cmd = {
+        -- NOTE: The Subs command name can be customized via the option "substitude_command_name"
+        "Subs",
+        "TextCaseOpenTelescope",
+        "TextCaseOpenTelescopeQuickChange",
+        "TextCaseOpenTelescopeLSPChange",
+        "TextCaseStartReplacingCommand",
+      },
+      -- If you want to use the interactive feature of the `Subs` command right away, text-case.nvim
+      -- has to be loaded on startup. Otherwise, the interactive feature of the `Subs` will only be
+      -- available after the first executing of it or after a keymap of text-case.nvim has been used.
+      lazy = false,
   },
   require 'user.plugins.easy-dotnet',
   { 'akinsho/toggleterm.nvim', version = '*', config = true },
@@ -719,44 +737,6 @@ require('lazy').setup({
     },
   },
 })
-
-require('text-transform').setup {
-  --- Prints information about internals of the plugin. Very verbose, only useful for debugging.
-  debug = false,
-  --- Keymap configurations
-  keymap = {
-    --- Keymap to open the telescope popup. Set to `false` or `nil` to disable keymapping
-    --- You can always customize your own keymapping manually.
-    telescope_popup = {
-      --- Opens the popup in normal mode
-      ['n'] = '<Leader>;',
-      --- Opens the popup in visual/visual block modes
-      ['v'] = '<Leader>;',
-    },
-  },
-  ---
-  --- Configurations for the text-transform replacers
-  --- Keys indicate the replacer name, and the value is a table with the following options:
-  ---
-  --- - `enabled` (boolean): Enable or disable the replacer - disabled replacers do not show up in the popup.
-  replacers = {
-    camel_case = { enabled = true },
-    const_case = { enabled = true },
-    dot_case = { enabled = true },
-    kebab_case = { enabled = true },
-    pascal_case = { enabled = true },
-    snake_case = { enabled = true },
-    title_case = { enabled = true },
-  },
-
-  --- Sort the replacers in the popup.
-  --- Possible values: 'frequency', 'name'
-  sort_by = 'frequency',
-
-  --- The popup type to show.
-  --- Possible values: 'telescope', 'select'
-  popup_type = 'select',
-}
 
 require('toggleterm').setup { open_mapping = [[<c-\>]], direction = 'tab' }
 require('git-conflict').setup {

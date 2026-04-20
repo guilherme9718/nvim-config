@@ -14,6 +14,10 @@ navegar para o buffer/linhagit push posterior = <C-i>
 Undo = U
 Redo = <C-R>
 
+## LSP
+Ver definição do método = K
+Abrir linha de diagnostico = grl
+
 ## Busca
 ver opções de busca = <leader>s
 
