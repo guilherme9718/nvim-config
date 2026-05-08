@@ -146,6 +146,8 @@ return {
       vim.keymap.set('n', '<C-p>', function()
         dotnet.run_project()
       end)
+
+      vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, { desc = "Run CodeLens" })
     end,
   },
 }

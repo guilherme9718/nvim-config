@@ -1,7 +1,7 @@
 --If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
 
 require 'user.options'
-
+require 'user.neovide'
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -762,3 +762,5 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 require 'user.keymaps'
+
+require 'user.plugins.ilspy-plugin'

@@ -100,3 +100,26 @@ vim.o.fixendofline = false
 vim.o.expandtab = true
 vim.o.shiftwidth = 4
 vim.o.matchpairs = vim.o.matchpairs .. ',<:>'
+
+-- Para editar com o LazyGit
+-- Necessário config em lazygit/config.yml
+-- edit: "nvim --server $NVIM --remote-send '<cmd>close<cr><cmd>lua EditFromLazygit({{filename}})<CR>'"
+-- editAtLine: "nvim --server $NVIM --remote-send '<cmd>close<CR><cmd>lua EditLineFromLazygit({{filename}},{{line}})<CR>'"
+function EditLineFromLazygit(file_path, line)
+    local path = vim.fn.expand("%:p")
+    if path == file_path then
+        vim.cmd(tostring(line))
+    else
+        vim.cmd("e " .. file_path)
+        vim.cmd(tostring(line))
+    end
+end
+
+function EditFromLazygit(file_path)
+    local path = vim.fn.expand("%:p")
+    if path == file_path then
+        return
+    else
+        vim.cmd("e " .. file_path)
+    end
+end

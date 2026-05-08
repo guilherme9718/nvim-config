@@ -34,7 +34,7 @@ Ir para o buffer anterior <M-k>
 Mover para o buffer para trás <M-J>
 Mover para o buffer para frente <M-K>
 
-# Git Conflict
+## Git Conflict
 quando houver conflito
 
 ours = o
@@ -42,5 +42,14 @@ theirs = t
 none = 0
 both = b
 
-# File explorer (nvim-tree)
+## File explorer (nvim-tree)
 Abrir keymaps = g?
+
+## Macros (nvim-macros)
+salva uma macro = `:MacroSave [register]`
+carrega uma macro para o  registro = `:MacroYank [register]`
+seleciona uma macro do menu = `:MacroSelect`
+deleta uma macro = `:MacroDelete`
+
+## Markdown para PDF (mdpdf)
+transforma em pdf o buffer atual = `:!mdpdf %`
