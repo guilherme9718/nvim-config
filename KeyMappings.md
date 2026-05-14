@@ -36,7 +36,7 @@ Mover para o buffer para frente <M-K>
 
 ## Git Conflict
 quando houver conflito
-
+:GitConflictListQf = obtém lista de conflitos
 ours = o
 theirs = t
 none = 0
