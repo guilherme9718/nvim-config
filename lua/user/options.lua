@@ -102,9 +102,10 @@ vim.o.expandtab = true
 vim.o.matchpairs = vim.o.matchpairs .. ',<:>'
 
 -- Para editar com o LazyGit
--- Necessário config em lazygit/config.yml
--- edit: "nvim --server $NVIM --remote-send '<cmd>close<cr><cmd>lua EditFromLazygit({{filename}})<CR>'"
--- editAtLine: "nvim --server $NVIM --remote-send '<cmd>close<CR><cmd>lua EditLineFromLazygit({{filename}},{{line}})<CR>'"
+-- Necessário config em lazygit/config.yml e baixar pacote python neovim-remote
+-- os:
+--  editPreset: 'nvim'
+--  edit: "nvr -l --remote {{filename}}"
 function EditLineFromLazygit(file_path, line)
     local path = vim.fn.expand("%:p")
     if path == file_path then

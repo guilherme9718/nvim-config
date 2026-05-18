@@ -30,7 +30,7 @@ rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  require 'user.plugins.guess-indent'.lazy(), -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -55,6 +55,8 @@ require('lazy').setup({
   --
   -- See `:help gitsigns` to understand what the configuration keys do
   require 'kickstart.plugins.gitsigns',
+
+  require('user.plugins.marks').lazy(),
   -- { -- Adds git related signs to the gutter, as well as utilities for managing changes
   --   'lewis6991/gitsigns.nvim',
   --   opts = {
@@ -670,28 +672,28 @@ require('lazy').setup({
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
   {
-      "johmsalas/text-case.nvim",
-      dependencies = { "nvim-telescope/telescope.nvim" },
-      config = function()
-        require("textcase").setup({})
-        require("telescope").load_extension("textcase")
-      end,
-      keys = {
-        "ga", -- Default invocation prefix
-        { "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "x" }, desc = "Telescope" },
-      },
-      cmd = {
-        -- NOTE: The Subs command name can be customized via the option "substitude_command_name"
-        "Subs",
-        "TextCaseOpenTelescope",
-        "TextCaseOpenTelescopeQuickChange",
-        "TextCaseOpenTelescopeLSPChange",
-        "TextCaseStartReplacingCommand",
-      },
-      -- If you want to use the interactive feature of the `Subs` command right away, text-case.nvim
-      -- has to be loaded on startup. Otherwise, the interactive feature of the `Subs` will only be
-      -- available after the first executing of it or after a keymap of text-case.nvim has been used.
-      lazy = false,
+    'johmsalas/text-case.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      require('textcase').setup {}
+      require('telescope').load_extension 'textcase'
+    end,
+    keys = {
+      'ga', -- Default invocation prefix
+      { 'ga.', '<cmd>TextCaseOpenTelescope<CR>', mode = { 'n', 'x' }, desc = 'Telescope' },
+    },
+    cmd = {
+      -- NOTE: The Subs command name can be customized via the option "substitude_command_name"
+      'Subs',
+      'TextCaseOpenTelescope',
+      'TextCaseOpenTelescopeQuickChange',
+      'TextCaseOpenTelescopeLSPChange',
+      'TextCaseStartReplacingCommand',
+    },
+    -- If you want to use the interactive feature of the `Subs` command right away, text-case.nvim
+    -- has to be loaded on startup. Otherwise, the interactive feature of the `Subs` will only be
+    -- available after the first executing of it or after a keymap of text-case.nvim has been used.
+    lazy = false,
   },
   require 'user.plugins.easy-dotnet',
   { 'akinsho/toggleterm.nvim', version = '*', config = true },
@@ -765,26 +767,6 @@ require 'user.keymaps'
 
 require 'user.plugins.ilspy-plugin'
 
-require('guess-indent').setup {
-  auto_cmd = true,  -- Set to false to disable automatic execution
-  override_editorconfig = false, -- Set to true to override settings set by .editorconfig
-  filetype_exclude = {  -- A list of filetypes for which the auto command gets disabled
-    "netrw",
-    "tutor",
-  },
-  buftype_exclude = {  -- A list of buffer types for which the auto command gets disabled
-    "help",
-    "nofile",
-    "terminal",
-    "prompt",
-  },
-  on_tab_options = { -- A table of vim options when tabs are detected 
-    ["expandtab"] = true,
-  },
-  on_space_options = { -- A table of vim options when spaces are detected 
-    ["expandtab"] = true,
-    ["tabstop"] = "detected", -- If the option value is 'detected', The value is set to the automatically detected indent size.
-    ["softtabstop"] = "detected",
-    ["shiftwidth"] = "detected",
-  },
-}
+require('user.plugins.guess-indent').setup()
+
+require('user.plugins.marks').setup()
