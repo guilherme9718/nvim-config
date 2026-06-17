@@ -30,7 +30,7 @@ rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  require 'user.plugins.guess-indent'.lazy(), -- Detect tabstop and shiftwidth automatically
+  require('user.plugins.guess-indent').lazy(), -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -611,7 +611,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     branch = 'main',
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+    --main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
       ensure_installed = {
@@ -718,7 +718,7 @@ require('lazy').setup({
       require('cd-project').setup {}
     end,
   },
-  require 'user.plugins.fugitive',
+  require 'user.plugins.fugitive'
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -771,3 +771,5 @@ require 'user.plugins.ilspy-plugin'
 require('user.plugins.guess-indent').setup()
 
 require('user.plugins.marks').setup()
+
+require('user.functions')

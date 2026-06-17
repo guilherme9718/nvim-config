@@ -85,11 +85,4 @@ map('n', 'grl', function()
   vim.diagnostic.open_float()
 end, { desc = 'LSP: Show Hovered Dignostic' })
 
---Text transform
-vim.keymap.set({ "n", "v" }, "<leader>tc", ":TtCamel<CR>",  { silent = true, desc = "To camelCase" })
-vim.keymap.set({ "n", "v" }, "<leader>ts", ":TtSnake<CR>",  { silent = true, desc = "To snake_case" })
-vim.keymap.set({ "n", "v" }, "<leader>tp", ":TtPascal<CR>", { silent = true, desc = "To PascalCase" })
-vim.keymap.set({ "n", "v" }, "<leader>to", ":TtConst<CR>",  { silent = true, desc = "To CONST_CASE" })
-vim.keymap.set({ "n", "v" }, "<leader>td", ":TtDot<CR>",    { silent = true, desc = "To dot.case" })
-vim.keymap.set({ "n", "v" }, "<leader>tk", ":TtKebab<CR>",  { silent = true, desc = "To kebab-case" })
-vim.keymap.set({ "n", "v" }, "<leader>tt", ":TtTitle<CR>",  { silent = true, desc = "To Title Case" })
+vim.keymap.set({'n', 'v'}, '<leader>p', [["0p]], { desc = 'Paste yanked register' })
