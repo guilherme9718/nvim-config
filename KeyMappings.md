@@ -53,3 +53,10 @@ deleta uma macro = `:MacroDelete`
 
 ## Markdown para PDF (mdpdf)
 transforma em pdf o buffer atual = `:!mdpdf %`
+
+## diff
+### Dentro do nvim
+:vert diffsplit main.c
+
+### fora do nvim
+nvim -d -o file1 file2 [file3 [file4]]
