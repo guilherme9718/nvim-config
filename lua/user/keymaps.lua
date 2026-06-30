@@ -86,3 +86,7 @@ map('n', 'grl', function()
 end, { desc = 'LSP: Show Hovered Dignostic' })
 
 vim.keymap.set({'n', 'v'}, '<leader>p', [["0p]], { desc = 'Paste yanked register' })
+
+vim.keymap.set({'n', 'v'}, 'grs', '<cmd>Telescope luasnip<CR>', { desc = 'Show [s]nippets' })
+
+

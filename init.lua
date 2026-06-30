@@ -30,6 +30,7 @@ rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  require 'user.plugins.nvim-tree',
   require('user.plugins.guess-indent').lazy(), -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
@@ -701,24 +702,14 @@ require('lazy').setup({
   { 'akinsho/git-conflict.nvim', version = '*', config = true },
   { 'akinsho/bufferline.nvim', version = '*', dependencies = 'nvim-tree/nvim-web-devicons' },
   {
-    'nvim-tree/nvim-tree.lua',
-    version = '*',
-    lazy = false,
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-    config = function()
-      require('nvim-tree').setup {}
-    end,
-  },
-  {
     'LintaoAmons/cd-project.nvim',
     tag = 'v0.10.0', -- Optional, You can also use tag to pin the plugin version for stability
     init = function() -- use init if you want enable auto_register_project, otherwise config is good
       require('cd-project').setup {}
     end,
   },
-  require 'user.plugins.fugitive'
+  require 'user.plugins.fugitive',
+  require 'user.plugins.luasnip',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -772,4 +763,4 @@ require('user.plugins.guess-indent').setup()
 
 require('user.plugins.marks').setup()
 
-require('user.functions')
+require 'user.functions'
