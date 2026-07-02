@@ -31,7 +31,7 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   require 'user.plugins.nvim-tree',
-  require('user.plugins.guess-indent').lazy(), -- Detect tabstop and shiftwidth automatically
+  require('user.plugins.indent'), -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -700,7 +700,6 @@ require('lazy').setup({
   require 'user.plugins.easy-dotnet',
   { 'akinsho/toggleterm.nvim', version = '*', config = true },
   { 'akinsho/git-conflict.nvim', version = '*', config = true },
-  { 'akinsho/bufferline.nvim', version = '*', dependencies = 'nvim-tree/nvim-web-devicons' },
   {
     'LintaoAmons/cd-project.nvim',
     tag = 'v0.10.0', -- Optional, You can also use tag to pin the plugin version for stability
@@ -749,8 +748,6 @@ require('git-conflict').setup {
   },
 }
 
-require('bufferline').setup {}
-
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
@@ -758,8 +755,6 @@ vim.opt.termguicolors = true
 require 'user.keymaps'
 
 require 'user.plugins.ilspy-plugin'
-
-require('user.plugins.guess-indent').setup()
 
 require('user.plugins.marks').setup()
 
