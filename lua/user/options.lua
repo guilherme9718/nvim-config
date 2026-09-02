@@ -100,7 +100,7 @@ vim.o.fixendofline = false
 vim.o.expandtab = true
 --vim.o.shiftwidth = 4
 vim.o.matchpairs = vim.o.matchpairs .. ',<:>'
-
+vim.o.bomb = true
 -- Para editar com o LazyGit
 -- Necessário config em lazygit/config.yml e baixar pacote python neovim-remote
 -- os:

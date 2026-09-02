@@ -1,4 +1,4 @@
-function sort_lines()
+local function sort_lines()
   local start_pos = vim.fn.getpos("'<")
   local end_pos = vim.fn.getpos("'>")
   local start_line = start_pos[2] - 1
@@ -21,7 +21,7 @@ function sort_lines()
   )
 end
 
-function sort_uniq_lines()
+local function sort_uniq_lines()
   local start_pos = vim.fn.getpos("'<")
   local end_pos = vim.fn.getpos("'>")
   local start_line = start_pos[2] - 1
@@ -52,3 +52,7 @@ function sort_uniq_lines()
     uniq_lines
   )
 end
+
+vim.api.nvim_create_user_command('SortLines', sort_lines, { range = true })
+vim.api.nvim_create_user_command('SortUniqueLines', sort_uniq_lines, { range = true })
+vim.api.nvim_create_user_command('CloseAllBuffers', '%bd|e#', {})
